@@ -9,6 +9,6 @@ class Agenda extends Model
 {
     use HasFactory;
 
-    // Ini agar semua kolom bisa diisi (Mass Assignment)
-    protected $guarded = [];
+    // GANTI $fillable dengan ini agar semua kolom bisa diinput
+    protected $guarded = []; 
 }

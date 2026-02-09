@@ -2,144 +2,312 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Laporan Data Agenda</title>
+    <title>Laporan Agenda Diskominfo</title>
     <style>
-        /* Pengaturan Halaman & Font Resmi */
+        @page { size: A4 landscape; margin: 1cm; }
+        
         body {
             font-family: 'Times New Roman', Times, serif;
             font-size: 11pt;
-            margin: 0.5cm; /* Margin tipis agar muat banyak data */
+            line-height: 1.15;
+            margin: 0;
+            padding: 0;
         }
 
-        /* Styling Kop Surat */
-        .kop-surat {
+        /* --- KOP SURAT --- */
+        .kop-container {
             width: 100%;
-            border-bottom: 4px double #000; /* Garis ganda khas surat resmi */
+            border-bottom: 3px double #000;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            text-align: center; /* Center everything */
+            display: table; /* Make it behave like a table to vertically align logo & text */
+        }
+        
+        /* Logo & Text Wrapper to keep them close */
+        .kop-content {
+            display: inline-block; /* Shrink to fit content so they stay together */
+            text-align: center;
+            width: 100%;
+        }
+
+        .logo-img {
+            width: 80px;
+            height: auto;
+            vertical-align: middle;
+            margin-right: 15px; /* Space between logo and text */
+            float: left; /* Float left to sit next to text block if needed, or use inline-block approach */
+            position: absolute; /* Absolute positioning might be safer for strict centering of text */
+            left: 20px;
+            top: 20px;
+        }
+
+        /* Using a Table for KOP to ensure Logo is Left of Text but Content is Centered */
+        .header-table {
+            width: 100%;
+            border-bottom: 3px double #000;
             padding-bottom: 10px;
             margin-bottom: 20px;
         }
-        .kop-surat td {
+        .header-table td {
             border: none;
+            vertical-align: middle;
         }
-        .kop-logo {
+        .logo-cell {
+            width: 10%; /* Small width to keep logo close */
+            text-align: right; /* Push logo to the right of its cell (towards text) */
+            padding-right: 10px;
+        }
+        .text-cell {
+            width: 90%;
+            text-align: center;
+            padding-right: 80px; /* Counter-balance the logo width to center text visually on page if needed, OR just center it in its cell */
+        }
+        
+        /* New Approach for "Rata Tengah Semuanya" */
+        /* Let's try a single cell centered or flex-like behavior with inline-block */
+        .header-title-block {
+            text-align: center;
+        }
+        .header-title-block img {
+            vertical-align: middle;
             width: 80px;
+            margin-right: 15px;
+        }
+        .header-title-block div {
+            display: inline-block;
+            vertical-align: middle;
             text-align: center;
         }
-        .kop-text {
-            text-align: center;
-        }
-        .kop-text h2 { margin: 0; font-size: 16pt; text-transform: uppercase; font-weight: bold; }
-        .kop-text h3 { margin: 0; font-size: 14pt; text-transform: uppercase; font-weight: bold; }
-        .kop-text p { margin: 0; font-size: 10pt; font-style: italic; }
 
-        /* Styling Judul Laporan */
-        .judul-laporan {
-            text-align: center;
-            font-size: 12pt;
-            font-weight: bold;
-            text-decoration: underline;
-            margin-bottom: 15px;
+        /* Typography */
+        .header-text h3 {
+            margin: 0;
+            font-size: 16pt;
+            font-weight: normal; 
             text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        .header-text h2 {
+            margin: 0;
+            font-size: 24pt; 
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            font-family: Arial, Helvetica, sans-serif; 
+        }
+        .header-text p {
+            margin: 0;
+            font-size: 11pt;
+            line-height: 1.3;
+        }
+        .header-text a {
+            color: #000;
+            text-decoration: none;
         }
 
-        /* Styling Tabel Data */
+        /* --- JUDUL LAPORAN --- */
+        .judul-container {
+            text-align: center;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 12pt;
+        }
+
+        /* --- INFO DATA --- */
+        .info-table {
+            width: 100%;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-size: 11pt;
+        }
+        .info-table td {
+            border: none;
+            padding: 2px 0;
+            vertical-align: top;
+        }
+
+        /* --- TABEL DATA --- */
         .table-data {
             width: 100%;
-            border-collapse: collapse; /* Agar garis tabel menyatu */
+            border-collapse: collapse;
+            margin-bottom: 20px;
         }
         .table-data th, .table-data td {
             border: 1px solid #000;
-            padding: 6px 8px;
-            vertical-align: top; /* Teks selalu di atas jika baris tinggi */
+            padding: 6px;
+            vertical-align: top;
+            font-size: 11pt;
         }
+        
+        /* Headers: Soft Blue #bdd7ee */
+        .bg-blue {
+            background-color: #bdd7ee; 
+        }
+
+        /* NO Column: Distinct Cyan Blue per request (Bright Cyan) */
+        .bg-cyan {
+            background-color: #00bef3; /* Bright cyan similar to Reference Image 3 */
+        }
+
         .table-data th {
-            background-color: #e0e0e0; /* Warna abu muda untuk header */
             text-align: center;
             font-weight: bold;
+            vertical-align: middle;
+            text-transform: uppercase;
         }
-        .text-center { text-align: center; }
+        
+        .center { text-align: center; }
 
-        /* Styling Bagian Tanda Tangan */
-        .table-ttd {
-            width: 100%;
-            margin-top: 30px;
-            border: none;
-        }
-        .table-ttd td {
-            border: none;
-            text-align: center;
-        }
+        /* --- TANDA TANGAN --- */
+        .ttd-table { width: 100%; border: none; margin-top: 40px; }
+        .ttd-table td { border: none; text-align: center; vertical-align: top; }
+        
+        .ttd-left { width: 40%; }
+        .ttd-center { width: 20%; }
+        .ttd-right { width: 40%; }
+
     </style>
 </head>
 <body>
 
-    <table class="kop-surat">
-        <tr>
-            <td class="kop-logo">
-                <div style="font-weight:bold; border:2px solid #000; padding:10px;">LOGO</div>
-            </td>
+    <!-- Loop through each report group (Month/Year) -->
+    @foreach($reports as $index => $report)
+        @php
+            $meta = $report['meta'];
+            $data = $report['data'];
+        @endphp
+
+        <!-- Content Helper wrapper -->
+        <div class="page-content">
             
-            <td class="kop-text">
-                <h2>PEMERINTAH KABUPATEN CONTOH</h2>
-                <h3>DINAS KOMUNIKASI DAN INFORMATIKA</h3>
-                <p>Jl. Jenderal Sudirman No. 123, Kota Contoh, Kode Pos 12345</p>
-                <p>Website: www.instansi.go.id | Email: info@instansi.go.id</p>
-            </td>
-        </tr>
-    </table>
+            <!-- KOP SURAT (Revised: Center Everything) -->
+            <!-- Reduced margin-bottom from 20px to 5px to make title closer -->
+            <div style="border-bottom: 3px double #000; padding-bottom: 10px; margin-bottom: 5px; text-align: center;">
+                <table style="width: 100%; border: none;">
+                    <tr>
+                        <td style="text-align: center;">
+                            <div style="display: inline-block; margin-right: 15px; vertical-align: top;">
+                                <img src="{{ public_path('img/logo_mataram.png') }}" style="width: 80px; height: auto;">
+                            </div>
+                            <div class="header-text" style="display: inline-block; vertical-align: top; text-align: center;">
+                                <h3>PEMERINTAH KOTA MATARAM</h3>
+                                <h2>DINAS KOMUNIKASI DAN INFORMATIKA</h2>
+                                <p>Jalan H. L. Mujitahid No. 1 Lt. III Gedung Selatan Kantor Walikota Mataram</p>
+                                <p>Telepon: (0370) 7504671; Posel: layanan@diskominfo.mataramkota.go.id</p>
+                                <p>Laman: www.diskominfo.mataramkota.go.id</p>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
 
-    <div class="judul-laporan">
-        LAPORAN REKAPITULASI BUKU TAMU & AGENDA
-    </div>
+            <!-- JUDUL -->
+            <div class="judul-container">
+                DAFTAR LAPORAN KEGIATAN {{ $meta['judul_laporan'] ?? 'TENAGA PENUNJANG KEGIATAN (TPK)' }} TAHUN {{ $meta['filter_tahun'] ?? date('Y') }}
+            </div>
 
-    <table class="table-data">
-        <thead>
-            <tr>
-                <th width="5%">No.</th>
-                <th width="15%">Tanggal</th>
-                <th width="25%">Nama / Instansi</th>
-                <th width="20%">Keperluan</th>
-                <th width="35%">Keterangan</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($data as $index => $item)
-            <tr>
-                <td class="text-center">{{ $index + 1 }}</td>
-                <td class="text-center">{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
-                <td>
-                    <strong>{{ $item->nama }}</strong><br>
-                    <span style="font-size: 10pt; color: #333;">Asal: {{ $item->instansi }}</span>
-                </td>
-                <td>{{ $item->keperluan }}</td>
-                <td>{{ $item->keterangan ?? '-' }}</td>
-            </tr>
-            @empty
-            <tr>
-                <td colspan="5" class="text-center" style="padding: 20px;">
-                    <em>Tidak ada data yang tersedia untuk rentang waktu ini.</em>
-                </td>
-            </tr>
-            @endforelse
-        </tbody>
-    </table>
+            <!-- INFO ATAS -->
+            <table class="info-table">
+                <tr>
+                    <td style="width: 10%;">Nama</td>
+                    <td style="width: 2%;">:</td>
+                    <td style="width: 40%;">{{ $meta['filter_nama'] ? $meta['filter_nama'] : '-' }}</td>
+                    
+                    <!-- Spacer to push right column -->
+                    <td style="width: 10%;"></td>
 
-    <table class="table-ttd">
-        <tr>
-            <td width="65%"></td> 
-            
-            <td width="35%">
-                <p>Kota Contoh, {{ date('d F Y') }}</p>
-                <p>Mengetahui,</p>
-                <p style="font-weight: bold;">Kepala Bagian Umum</p>
-                
-                <br><br><br><br>
-                
-                <p style="text-decoration: underline; font-weight: bold;">NAMA PEJABAT, S.E., M.M.</p>
-                <p>NIP. 19800101 200501 1 001</p>
-            </td>
-        </tr>
-    </table>
+                    <td style="width: 10%;">Jabatan</td> <!-- Changed from Staf -->
+                    <td style="width: 2%;">:</td>
+                    <td style="width: 26%;">{{ $meta['jabatan_staf'] ?: '-' }}</td>
+                </tr>
+                <tr>
+                    <td>Bulan</td>
+                    <td>:</td>
+                    <td>
+                        @if($meta['filter_bulan'])
+                            {{ \Carbon\Carbon::create()->month($meta['filter_bulan'])->translatedFormat('F') }}
+                        @else
+                            -
+                        @endif
+                    </td>
+
+                    <td></td> <!-- Spacer -->
+
+                    <td>Bidang</td>
+                    <td>:</td>
+                    <td>{{ $meta['bidang'] ?: '-' }}</td>
+                </tr>
+            </table>
+
+            <!-- TABEL DATA -->
+            <table class="table-data">
+                <thead>
+                    <tr class="bg-blue">
+                        <th style="width: 5%">NO</th> 
+                        <th style="width: 15%">HARI/TANGGAL</th>
+                        <th style="width: 30%">WILAYAH / KEGIATAN</th>
+                        <th style="width: 50%">KETERANGAN</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($data as $key => $item)
+                    <tr>
+                        <td class="center bg-cyan">{{ $key + 1 }}</td>
+                        <td>
+                            {{-- Format: Rabu, 11 Januari 2023 --}}
+                            {{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('l, d F Y') }}
+                        </td>
+                        <td>
+                            {{ $item->instansi }}
+                        </td>
+                        <td>
+                            {{ $item->keterangan ?? '-' }}
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="4" class="center" style="padding: 20px;">Tidak ada data agenda untuk periode ini.</td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+
+            <!-- TANDA TANGAN -->
+            <table class="ttd-table">
+                <tr>
+                    <!-- Kiri: Atasan -->
+                    <td class="ttd-left">
+                        <p>Mengetahui :</p>
+                        <p><b>{{ $meta['jabatan_atasan'] ?: 'Kepala Bidang' }}</b></p>
+                        <br><br><br><br>
+                        <p style="text-decoration: underline; font-weight: bold;">{{ $meta['nama_atasan'] ?: '(..........................)' }}</p>
+                        <p>NIP. {{ $meta['nip_atasan'] ?: '..........................' }}</p>
+                    </td>
+
+                    <td class="ttd-center"></td>
+
+                    <!-- Kanan: Staf yang bersangkutan -->
+                    <td class="ttd-right">
+                        <p>Mataram, {{ $meta['tanggal_tanda_tangan']->translatedFormat('d F Y') }}</p>
+                        <p><b>{{ $meta['jabatan_staf'] ?: 'Staf' }}</b></p> 
+                        <br><br><br><br>
+                        <!-- Name normal case, matches top info -->
+                        <p style="text-decoration: underline; font-weight: bold;">{{ $meta['filter_nama'] ? $meta['filter_nama'] : '(..........................)' }}</p>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+        <!-- Page Break if not last item -->
+        @if(!$loop->last)
+            <div style="page-break-after: always;"></div>
+        @endif
+
+    @endforeach
 
 </body>
 </html>
