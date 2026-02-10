@@ -13,8 +13,8 @@
                 @csrf
                 <div class="row g-3">
                     <div class="col-12">
-                        <label class="form-label fw-bold">Judul Laporan (Jenis TPK)</label>
-                        <input type="text" name="judul_laporan" class="form-control" placeholder="Default: TENAGA PENUNJANG KEGIATAN (TPK)" value="TENAGA PENUNJANG KEGIATAN (TPK)">
+                        <label class="form-label fw-bold">Judul Laporan</label>
+                        <input type="text" name="judul_laporan" class="form-control" placeholder="" value="">
                         <small class="text-muted">Bagian ini akan muncul di judul PDF: "... KEGIATAN [JUDUL INI] TAHUN ..."</small>
                     </div>
 
@@ -33,7 +33,7 @@
                     </div>
                     <div class="col-md-6">
                         <label class="form-label fw-bold">Wilayah / Kegiatan</label>
-                        <input type="text" name="instansi" class="form-control" required placeholder="Contoh: Ruang Rapat, Survei Lapangan, dll">
+                        <textarea name="instansi" class="form-control" rows="3" required placeholder="Contoh: Ruang Rapat, Survei Lapangan, dll">{{ old('instansi') }}</textarea>
                         <small class="text-muted">Isi dengan Lokasi atau Nama Kegiatan.</small>
                     </div>
 

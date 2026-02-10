@@ -62,7 +62,7 @@ class FormController extends Controller
         ]);
 
         $validated['keperluan']   = '-'; 
-        $validated['judul_laporan'] = $request->judul_laporan ?: 'TENAGA PENUNJANG KEGIATAN (TPK)';
+        $validated['judul_laporan'] = $request->judul_laporan ?: '';
 
         Agenda::create($validated);
 
@@ -124,7 +124,7 @@ class FormController extends Controller
                 'filter_bulan'    => $dateObj->month,
                 'filter_tahun'    => $dateObj->year,
                 // Custom Title from Data
-                'judul_laporan'   => $firstItem->judul_laporan ?? 'TENAGA PENUNJANG KEGIATAN (TPK)',
+                'judul_laporan'   => $firstItem->judul_laporan ?? '',
                 
                 // Ambil detail tanda tangan dari record pertama grup ini
                 'jabatan_staf'    => $firstItem->jabatan_staf ?? '-',
@@ -174,7 +174,7 @@ class FormController extends Controller
         ]);
 
         $validated['keperluan']   = '-'; // Maintain for DB compatibility
-        $validated['judul_laporan'] = $request->judul_laporan ?: 'TENAGA PENUNJANG KEGIATAN (TPK)';
+        $validated['judul_laporan'] = $request->judul_laporan ?: '';
 
         $item = Agenda::findOrFail($id);
         $item->update($validated);

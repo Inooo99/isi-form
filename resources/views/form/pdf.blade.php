@@ -261,7 +261,7 @@
                             {{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('l, d F Y') }}
                         </td>
                         <td>
-                            {{ $item->instansi }}
+                            {!! nl2br(e($item->instansi)) !!}
                         </td>
                         <td>
                             {{ $item->keterangan ?? '-' }}

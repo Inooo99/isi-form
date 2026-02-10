@@ -34,7 +34,7 @@
                     </div>
                     <div class="col-md-6">
                         <label class="form-label fw-bold">Wilayah / Kegiatan</label>
-                        <input type="text" name="instansi" class="form-control" required placeholder="Contoh: Ruang Rapat, Survei Lapangan, dll" value="{{ old('instansi', $item->instansi) }}">
+                        <textarea name="instansi" class="form-control" rows="3" required placeholder="Contoh: Ruang Rapat, Survei Lapangan, dll">{{ old('instansi', $item->instansi) }}</textarea>
                         <small class="text-muted">Isi dengan Lokasi atau Nama Kegiatan.</small>
                     </div>
 

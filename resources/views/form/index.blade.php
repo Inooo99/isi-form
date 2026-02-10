@@ -103,7 +103,7 @@
                                 <td class="ps-4">{{ ($data->currentPage() - 1) * $data->perPage() + $key + 1 }}</td>
                                 <td>{{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('d F Y') }}</td>
                                 <td class="fw-bold">{{ $item->nama }}</td>
-                                <td>{{ $item->instansi }}</td>
+                                <td>{!! nl2br(e($item->instansi)) !!}</td>
                                 <td>{{ \Illuminate\Support\Str::limit($item->keterangan, 50) ?? '-' }}</td>
                                 <td class="text-center">
                                     <div class="d-flex justify-content-center align-items-center">
